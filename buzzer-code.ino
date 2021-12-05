@@ -5,11 +5,12 @@
 #define PIN_2 14
 #define PIN_3 27
 #define PIN_S 26
+#define PIN_L 22
 
 OneButton buzzer1(PIN_1, true);
 OneButton debug2(PIN_2, true);
 OneButton debug3(PIN_3, true);
-OneButton shutdow(PIN_S, true);
+OneButton shtdwn(PIN_S, true);
 
 BleKeyboard bleKeyboard("Fotobox-Buzzer", "Espressif", 91);
 
@@ -18,11 +19,14 @@ void setup() {
   //Serial.println("Starting BLE work!");
 
   setCpuFrequencyMhz(80);
+  pinMode(PIN_L, OUTPUT);
+  delay(200);
+  digitalWrite(PIN_L, HIGH);
   
   buzzer1.attachClick(handlebuzzer1);
   debug2.attachClick(handledebug2);
   debug3.attachClick(handledebug3);
-  shutdow.attachClick(handleshutdow);
+  shtdwn.attachClick(handleshtdwn);
   bleKeyboard.begin();
 }
 
@@ -31,7 +35,7 @@ void loop() {
     buzzer1.tick();
     debug2.tick();
     debug3.tick();
-    shutdow.tick();
+    shtdwn.tick();
   }
 }
 
@@ -41,16 +45,33 @@ void handlebuzzer1() {
 }
 
 void handledebug2() {
+  digitalWrite(PIN_L, LOW);
   bleKeyboard.write('2');
+  delay(100);
+  digitalWrite(PIN_L, HIGH);
 }
 
 void handledebug3() {
+  digitalWrite(PIN_L, LOW);
   bleKeyboard.write('3');
+  delay(100);
+  digitalWrite(PIN_L, HIGH);
 }
 
-void handleshutdow() {
+void handleshtdwn() {
   bleKeyboard.write('0');
-  delay(1000);
+  digitalWrite(PIN_L, LOW);
+  delay(100);
+  digitalWrite(PIN_L, HIGH);
+  delay(200);  
+  digitalWrite(PIN_L, LOW);
+  delay(100);
+  digitalWrite(PIN_L, HIGH);
+  delay(200);  
+  digitalWrite(PIN_L, LOW);
+  delay(100);
+  digitalWrite(PIN_L, HIGH);
+  delay(300);
   btStop();
   esp_deep_sleep_start();
 }
