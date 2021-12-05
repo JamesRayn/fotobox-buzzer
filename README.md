@@ -2,7 +2,7 @@
 
 ## Teileliste:
 * WeMos Lolin32 lite - https://de.aliexpress.com/item/33009178296.html
-* Grobhandtaster     - https://de.aliexpress.com/item/4000031677760.html
+* Grobhandtaster     - https://de.aliexpress.com/item/4000031677760.html (60mm Mushroom Momentary/Self Reset Switch/Button)
 * Akku               - https://www.ebay.de/itm/283383515567
 * Gehäuse aus 3D Drucker
 * Eigenbauplatine mit Tastern im Boden (optional) (alternativ Eigenumsetzung von Touchbedienung mit Kontaktflächen über ESP32 Touchfunktion)
