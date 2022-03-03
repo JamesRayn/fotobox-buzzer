@@ -14,6 +14,8 @@ OneButton shtdwn(PIN_S, true);
 
 BleKeyboard bleKeyboard("Fotobox-Buzzer", "Espressif", 91);
 
+int bttimeout = 3000; //Bluetooth connect timeout ~300sek / ~5min
+
 void setup() {
   //Serial.begin(115200);
   //Serial.println("Starting BLE work!");
@@ -36,6 +38,23 @@ void loop() {
     debug2.tick();
     debug3.tick();
     shtdwn.tick();
+  }
+
+  if(!bleKeyboard.isConnected()) {
+    shtdwn.tick();
+    delay(100);
+    bttimeout--;
+    
+    if(bttimeout % 5 == 0) {
+      digitalWrite(PIN_L, LOW);
+      delay(25);
+      digitalWrite(PIN_L, HIGH);
+    }
+   
+    if(bttimeout<0) {
+      btStop();
+      esp_deep_sleep_start();
+    }
   }
 }
 
